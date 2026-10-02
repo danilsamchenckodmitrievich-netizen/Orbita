@@ -8,7 +8,7 @@ Free practice website for primary school (grades 2–4) in Russian: Russian lang
 
 | | |
 |---|---|
-| Content | 3 grades × 5 subjects × 6 topics = **90 topics**, each with **easy / medium / hard** levels of 5 tasks: **1,350 tasks** |
+| Content | 3 grades × 5 subjects × 9 topics = **135 topics** following the «Школа России» textbooks (e.g. main and secondary parts of the sentence, simple and complex sentences, Roman numerals, price × quantity), each with **easy / medium / hard** levels of 5 tasks: **2,025 tasks** |
 | Task types | multiple choice (options are shuffled each attempt) and typed answers (case, `ё`/`е`, spaces in numbers and trailing punctuation are ignored) |
 | Grading | shown after each level: grade **5 / 4 / 3 / 2** (≥90% / ≥70% / ≥50% / below), 0–3 stars, accuracy, time, and a per-question review with the correct answer and an explanation |
 | Points | 10 / 20 / 30 per correct answer (easy / medium / hard), +1 answer's worth for a flawless level, +5 per day of streak on the first lesson of the day. Repeating a level without beating your best gives half points |
