@@ -1,5 +1,10 @@
 name: Deploy to GitHub Pages
 
+# Проверяет задания на каждом push и pull request.
+# Публикует сайт сам, только если в Settings → Pages выбран источник «GitHub Actions».
+# Если выбран «Deploy from a branch» (main, /root), сайт публикует сам GitHub,
+# а этот workflow только проверяет контент.
+
 on:
   push:
     branches: [main]
@@ -32,23 +37,40 @@ jobs:
     permissions:
       contents: read
       pages: read
+    outputs:
+      deploy: ${{ steps.mode.outputs.deploy }}
     steps:
-      - uses: actions/checkout@v6
+      - name: Check Pages source
+        id: mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          type=$(gh api "repos/${{ github.repository }}/pages" --jq .build_type 2>/dev/null || echo unknown)
+          echo "Pages build type: $type"
+          if [ "$type" = "workflow" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Pages публикует сайт из ветки — отдельная публикация не нужна."
+          fi
+      - if: steps.mode.outputs.deploy == 'true'
+        uses: actions/checkout@v6
       - name: Assemble _site
+        if: steps.mode.outputs.deploy == 'true'
         run: |
           mkdir -p _site
           cp -r index.html 404.html manifest.webmanifest assets _site/
           # Уникальная версия файлов, чтобы браузеры не держали старый кэш после обновления
           sed -i "s/__BUILD__/${GITHUB_SHA::8}/g" _site/index.html
-      - uses: actions/configure-pages@v6
-      - uses: actions/upload-pages-artifact@v5
+      - if: steps.mode.outputs.deploy == 'true'
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
   deploy:
     name: Deploy
     needs: build
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && needs.build.outputs.deploy == 'true'
     runs-on: ubuntu-latest
     permissions:
       pages: write

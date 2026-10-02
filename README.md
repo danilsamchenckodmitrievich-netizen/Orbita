@@ -2,7 +2,7 @@
 
 Free practice website for primary school (grades 2–4) in Russian: Russian language, maths, English, the world around us (окружающий мир) and literary reading. Each topic has a short rule with examples and three difficulty levels. After every level the site gives an automatic grade and awards points, ranks and badges.
 
-**Live site:** `https://danilsamchenckodmitrievich-netizen.github.io/Orbita/` (after Pages is enabled, see below).
+**Live site:** https://danilsamchenckodmitrievich-netizen.github.io/Orbita/
 
 ## What's inside
 
@@ -19,15 +19,9 @@ Progress is stored in the browser (`localStorage`, key `orbita-v2`). Progress fr
 
 ## Deploying to GitHub Pages
 
-The workflow `.github/workflows/pages.yml` validates the content and deploys the site on every push to `main`.
+The site is published from the `main` branch (Settings → Pages → **Deploy from a branch**, `main`, `/ (root)`). Every push to `main` updates the live site within a minute or two. The `.nojekyll` file makes Pages serve the files as they are.
 
-One-time setup:
-
-1. Open **Settings → Pages** in the repository.
-2. Under **Build and deployment → Source**, choose **GitHub Actions**.
-3. Merge this branch into `main` (or push to `main`). The **Deploy to GitHub Pages** workflow publishes the site, and its URL appears in the workflow run and in Settings → Pages.
-
-Pull requests only run the content check; they don't deploy.
+The workflow `.github/workflows/pages.yml` checks the content on every push and pull request. If you switch Settings → Pages → Source to **GitHub Actions**, the same workflow also builds and deploys the site itself and adds a version to file URLs, so browsers pick up updates immediately.
 
 ## Project structure
 
