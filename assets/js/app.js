@@ -341,8 +341,10 @@ const NUM_RE=/^-?\d+([.,]\d+)?$/;
 const FIXED_RE=/^(I{1,3}|IV|[1-4]-е|верно|неверно|да|нет)$/i;
 const clean = s=>String(s).replace(/[\s  ]/g,'');
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+// Кириллические Х, С, М похожи на латинские X, C, M (римские цифры): приводим обе стороны к одному виду
+const LOOKALIKE={'х':'x','с':'c','м':'m'};
 function norm(s){
-  return String(s).toLowerCase().replace(/ё/g,'е').replace(/[’‘`´ʼ]/g,"'").replace(/[−–—]/g,'-')
+  return String(s).toLowerCase().replace(/ё/g,'е').replace(/[хсм]/g,c=>LOOKALIKE[c]).replace(/[’‘`´ʼ]/g,"'").replace(/[−–—]/g,'-')
     .replace(/[  ]/g,' ').replace(/(\d)\s+(?=\d)/g,'$1').replace(/\s+/g,' ').replace(/^[«"']+|[»"'.!?,;:]+$/g,'').trim();
 }
 function prep(q){
@@ -669,6 +671,7 @@ function profile(){
 let firstRoute=true;
 function route(){
   keyHandler=null;
+  document.querySelectorAll('.confetti').forEach(c=>c.remove());
   const h=(location.hash||'#/').slice(2).split('/').map(decodeURIComponent);
   document.body.classList.toggle('in-lesson',h[0]==='lesson');
   const g=+h[1], s=h[2];
