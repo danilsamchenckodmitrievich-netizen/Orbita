@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Орбита — уроки для 2–4 класса</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF0F4;--card:#FFFFFF;--soft:#F3F4F7;--ink:#14161C;--muted:#4A4F5C;--quiet:#5A606E;--line:#DDE1E8;--track:#D6DAE2;
+  --lime:#C2EA4E;--indigo:#3946A6;--good:#2D6A4A;--goodbg:#E3F1E8;--goodink:#1F4D35;--bad:#C2452A;--badbg:#FBE7E2;--badink:#7A2A16;--pick:#ECEEFA;
+  --display:'Unbounded','Arial Rounded MT Bold',system-ui,sans-serif;--body:'Golos Text','Segoe UI',system-ui,-apple-system,sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111318;--card:#1C1F27;--soft:#252934;--ink:#F1F2F5;--muted:#B9BDC8;--quiet:#9CA1AE;--line:#2C303B;--track:#353A47;
+  --goodbg:#18342A;--goodink:#BDE7CC;--badbg:#3B1E18;--badink:#F6C3B6;--pick:#262C4D;--indigo:#7E8BE6;
+}}
+:root[data-theme="dark"]{
+  --bg:#111318;--card:#1C1F27;--soft:#252934;--ink:#F1F2F5;--muted:#B9BDC8;--quiet:#9CA1AE;--line:#2C303B;--track:#353A47;
+  --goodbg:#18342A;--goodink:#BDE7CC;--badbg:#3B1E18;--badink:#F6C3B6;--pick:#262C4D;--indigo:#7E8BE6;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:3px}
+.app{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:110px}
+.wrap{padding:20px 16px 0;display:flex;flex-direction:column;gap:22px}
+.h-display{font-family:var(--display);font-weight:600;letter-spacing:-.01em;margin:0}
+.row{display:flex;align-items:center;gap:10px}
+.between{justify-content:space-between}
+.iconbtn{width:44px;height:44px;border-radius:14px;border:0;background:var(--card);display:grid;place-items:center;flex-shrink:0}
+.logo{font-family:var(--display);font-weight:700;font-size:19px}
+.avatar{width:44px;height:44px;border-radius:22px;background:#3946A6;color:#fff;font-family:var(--display);font-weight:600;font-size:15px;display:grid;place-items:center;text-decoration:none}
+.lead{margin:6px 0 0;font-size:15px;line-height:1.45;color:var(--muted)}
+.panel{background:var(--card);border-radius:24px;padding:16px 18px}
+.streak-days{display:flex;gap:6px}
+.day{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--quiet)}
+.day i{width:24px;height:24px;border-radius:12px;background:var(--track);display:block}
+.day.on i{background:var(--lime)}
+.day.today{color:var(--ink);font-weight:600}.day.today i{box-shadow:0 0 0 3px var(--ink)}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:22px;background:var(--line)}
+.seg button{height:44px;border-radius:18px;border:0;background:transparent;color:var(--muted);font-family:var(--display);font-weight:600;font-size:14px;transition:background .2s}
+.seg button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.cards{display:flex;flex-direction:column;gap:14px}
+.subj{position:relative;overflow:hidden;border-radius:28px;padding:22px;color:#fff;display:flex;flex-direction:column;gap:12px;min-height:196px;text-decoration:none;transition:transform .15s}
+.subj:active{transform:scale(.985)}
+.subj .deco{position:absolute;right:-10px;top:-12px;width:150px;height:150px;opacity:.2;pointer-events:none}
+.bar{width:120px;height:6px;border-radius:3px;background:rgba(255,255,255,.25)}
+.bar b{display:block;height:6px;border-radius:3px;background:var(--lime);transition:width .6s}
+.subj h3{margin:0;max-width:250px;font-family:var(--display);font-weight:600;font-size:22px;line-height:1.15}
+.subj p{margin:0;font-size:14px;line-height:1.4;color:rgba(255,255,255,.92)}
+.subj .foot{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;font-size:13px;color:rgba(255,255,255,.92)}
+.pill{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 22px;border-radius:24px;background:var(--lime);color:#14161C;font-weight:600;font-size:15px}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);padding:8px 8px calc(10px + env(safe-area-inset-bottom,0px))}
+.nav div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0;text-decoration:none;color:var(--quiet);font-size:12px}
+.nav a[aria-current="page"]{color:var(--indigo);font-weight:600}
+.nav svg{stroke:currentColor}
+.chead{position:relative;overflow:hidden;color:#fff;padding:20px 16px 28px;border-radius:0 0 32px 32px;display:flex;flex-direction:column;gap:20px}
+.chead .deco{position:absolute;right:-40px;bottom:-50px;width:240px;height:240px;opacity:.14;pointer-events:none}
+.glass{background:rgba(255,255,255,.16)}
+.ring{position:relative;width:84px;height:84px;flex-shrink:0}
+.ring span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:18px}
+.resume{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px;padding:10px 10px 10px 18px;border-radius:22px;background:#fff;color:#14161C;text-decoration:none}
+.resume small{display:block;font-size:12px;color:#5A606E}.resume strong{font-size:15px}
+.play{width:44px;height:44px;border-radius:22px;background:var(--lime);display:grid;place-items:center;flex-shrink:0}
+.topics{padding:24px 16px 32px;display:flex;flex-direction:column;gap:12px}
+.topic{display:flex;align-items:center;gap:14px;min-height:72px;padding:14px 16px;border-radius:24px;background:var(--card);text-decoration:none;color:var(--ink)}
+.topic.current{box-shadow:0 0 0 2px var(--accent)}
+.num{width:40px;height:40px;border-radius:13px;background:var(--soft);display:grid;place-items:center;font-family:var(--display);font-weight:600;font-size:16px;flex-shrink:0}
+.topic.done .num{background:#2D6A4A}
+.topic.current .num{background:var(--accent);color:#fff}
+.topic .t{flex-grow:1;display:flex;flex-direction:column;gap:2px}
+.topic .t b{font-weight:600;font-size:16px;line-height:1.3}
+.topic .t small{font-size:12.5px;font-weight:500;color:var(--quiet)}
+.topic.done .t small{color:var(--good)}
+.lhead{display:flex;align-items:center;gap:12px}
+.steps{flex-grow:1;display:grid;gap:5px}
+.steps i{height:8px;border-radius:4px;background:var(--track);display:block;transition:background .3s}
+.steps i.on{background:var(--accent)}
+.kicker{font-size:13px;font-weight:600;color:var(--quiet)}
+.theory{background:var(--card);border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:14px;font-size:16px;line-height:1.6}
+.theory p{margin:0 0 8px}.theory p:last-child{margin:0}
+.ex{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ex div{border-radius:16px;background:var(--soft);padding:12px;font-weight:600;font-size:15px;line-height:1.35}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{width:100%;min-height:58px;border-radius:18px;border:2px solid var(--track);background:var(--card);display:flex;align-items:center;gap:14px;padding:12px 16px;font-size:17px;font-weight:500;text-align:left;transition:border-color .15s,background .15s}
+.opt i{width:22px;height:22px;border-radius:11px;border:2px solid var(--track);flex-shrink:0;display:block}
+.opt[aria-pressed="true"]{border-color:var(--indigo);background:var(--pick)}.opt[aria-pressed="true"] i{border-color:var(--indigo);background:var(--indigo)}
+.opt.right{border-color:var(--good);background:var(--goodbg)}.opt.right i{border-color:var(--good);background:var(--good)}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}.opt.wrong i{border-color:var(--bad);background:var(--bad)}
+.opt:disabled{cursor:default;color:var(--ink)}
+.fb{border-radius:18px;padding:14px 16px;font-size:15px;line-height:1.5;animation:pop .3s ease}
+.fb.ok{background:var(--goodbg);color:var(--goodink)}.fb.no{background:var(--badbg);color:var(--badink)}
+@keyframes pop{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+.cta{height:56px;width:100%;border-radius:28px;border:0;background:var(--lime);color:#14161C;font-weight:600;font-size:16px;display:grid;place-items:center;text-decoration:none}
+.cta:disabled{background:var(--track);color:var(--quiet);cursor:default}
+.cta.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--track)}
+.result{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:30px}
+.stars{display:flex;gap:10px}
+.stars svg{width:56px;height:56px;animation:pop .4s ease both}
+.stars svg:nth-child(2){animation-delay:.12s}.stars svg:nth-child(3){animation-delay:.24s}
+.field{display:flex;flex-direction:column;gap:8px}
+.field input{height:52px;border-radius:16px;border:2px solid var(--track);background:var(--card);padding:0 16px;font-size:16px}
+.field input:focus{outline:none;border-color:var(--indigo)}
+.stat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.stat div{background:var(--card);border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--display);font-size:24px;font-weight:600}
+.stat span{font-size:12.5px;color:var(--quiet)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<nav class="nav" aria-label="Основное меню"><div>
+  <a href="#/" id="nav-home"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10v16H5.5A1.5 1.5 0 0 1 4 18.5zM14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14z"/></svg>Предметы</a>
+  <a href="#/profile" id="nav-profile"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>Профиль</a>
+</div></nav>
+
+<script>
+(function(){
+const SUBJ = {
+  rus:{name:'Русский язык',color:'#7E2557',deco:'<path d="M18 84 44 16l26 68"/><path d="M28 60h32"/><path d="M76 48c8 0 12 4 12 10v26M88 70c-4-4-20-4-20 6 0 10 16 10 20 2"/>',w:7},
+  math:{name:'Математика',color:'#3946A6',deco:'<path d="M14 30h32M30 14v32"/><path d="M60 16l24 24M84 16 60 40"/><path d="M14 72h32"/><path d="M60 66h24M60 80h24"/>',w:7},
+  eng:{name:'Английский язык',color:'#1E6F6B',deco:'<path d="M14 22h58a10 10 0 0 1 10 10v28a10 10 0 0 1-10 10H42L26 84V70H14z"/><path d="M30 56l10-24 10 24M34 48h12"/>',w:6},
+  world:{name:'Окружающий мир',color:'#2D6A4A',deco:'<path d="M20 80C20 40 46 16 84 16c0 38-24 64-64 64Z"/><path d="M20 80 62 38"/>',w:6},
+  read:{name:'Литературное чтение',color:'#94450F',deco:'<path d="M50 28C40 20 26 18 12 20v58c14-2 28 0 38 8 10-8 24-10 38-8V20c-14-2-28 0-38 8Z"/><path d="M50 28v58"/>',w:6}
+};
+const ORDER = ['rus','math','eng','world','read'];
+
+/* Lesson = [title, theory html, examples, questions[[question, options, answer index, explanation]]] */
+const C = {
+2:{
+rus:[
+ ['Звуки и буквы','<p>Звуки мы <b>слышим и произносим</b>, а буквы <b>видим и пишем</b>. Гласных букв 10: а, о, у, ы, и, э, е, ё, ю, я.</p><p>Буквы <b>ь</b> и <b>ъ</b> звуков не обозначают. Сколько в слове гласных, столько и слогов.</p>',['ёж: 2 буквы, 3 звука','ма-ши-на: 3 слога'],[
+  ['Сколько гласных букв в русском алфавите?',['6','10','33'],1,'Гласных букв 10, а гласных звуков 6.'],
+  ['Какая буква не обозначает звука?',['ь','й','э'],0,'Мягкий знак показывает мягкость, но сам звука не даёт.'],
+  ['Сколько слогов в слове «машина»?',['2','3','4'],1,'Три гласные — три слога: ма-ши-на.']]],
+ ['ЖИ–ШИ, ЧА–ЩА, ЧУ–ЩУ','<p><b>ЖИ, ШИ</b> пиши с буквой <b>И</b>. <b>ЧА, ЩА</b> пиши с буквой <b>А</b>. <b>ЧУ, ЩУ</b> пиши с буквой <b>У</b>.</p><p>Слышим иногда «жы» или «щю», а пишем всегда по правилу.</p>',['лыжи, шина','чашка, роща','чудо, щука','жираф, шишка'],[
+  ['В каком слове нет ошибки?',['машына','лыжи','жывот'],1,'После Ж и Ш пишем И: лыжи.'],
+  ['Как правильно?',['чяшка','чашка','чашко'],1,'ЧА пишем с буквой А.'],
+  ['Как пишется название рыбы?',['щюка','щука','шука'],1,'ЩУ пишем с буквой У: щука.']]],
+ ['Части речи','<p><b>Кто? что?</b> — имя существительное (кот, дом).</p><p><b>Какой? какая?</b> — имя прилагательное (рыжий, тёплая).</p><p><b>Что делает?</b> — глагол (спит, бежит).</p>',['рыжий — какой?','кот — кто?','спит — что делает?','на — предлог'],[
+  ['Слово «бежит» — это…',['существительное','прилагательное','глагол'],2,'Бежит — что делает? Это глагол.'],
+  ['На какой вопрос отвечает слово «красный»?',['кто?','какой?','что делает?'],1,'Красный — какой? Это прилагательное.'],
+  ['Найди существительное',['весёлый','кот','прыгает'],1,'Кот — кто? Это существительное.']]]
+],
+math:[
+ ['Числа до 100','<p>Двузначное число состоит из <b>десятков</b> и <b>единиц</b>. В числе 47 — 4 десятка и 7 единиц: 47 = 40 + 7.</p><p>Сравниваем сначала десятки, потом единицы.</p>',['47 = 40 + 7','52 > 48'],[
+  ['Сколько десятков в числе 68?',['8','6','68'],1,'Первая цифра — десятки: 6 десятков.'],
+  ['Какое число больше?',['52','48'],0,'5 десятков больше, чем 4 десятка.'],
+  ['Число из 3 десятков и 5 единиц —',['53','35','8'],1,'3 десятка и 5 единиц — это 35.']]],
+ ['Сложение с переходом через десяток','<p>Сначала дополняем до круглого числа, потом прибавляем остаток.</p><p>38 + 5: 38 + 2 = 40, 40 + 3 = <b>43</b>.</p><p>52 − 7: 52 − 2 = 50, 50 − 5 = <b>45</b>.</p>',['38 + 5 = 43','52 − 7 = 45'],[
+  ['38 + 5 = ?',['43','33','42'],0,'38 + 2 = 40, 40 + 3 = 43.'],
+  ['52 − 7 = ?',['45','55','44'],0,'52 − 2 = 50, 50 − 5 = 45.'],
+  ['27 + 6 = ?',['33','32','23'],0,'27 + 3 = 30, 30 + 3 = 33.']]],
+ ['Умножение','<p>Умножение — это сложение одинаковых чисел: 3 · 4 = 3 + 3 + 3 + 3 = <b>12</b>.</p><p>От перестановки множителей произведение не меняется: 3 · 4 = 4 · 3.</p>',['2 · 5 = 10','3 · 3 = 9'],[
+  ['4 · 2 = ?',['6','8','42'],1,'4 + 4 = 8.'],
+  ['Какое сложение равно 3 · 5?',['3 + 5','5 + 5 + 5','3 + 3 + 3'],1,'3 · 5 = 5 + 5 + 5 = 15.'],
+  ['2 · 9 = ?',['18','11','16'],0,'9 + 9 = 18.']]]
+],
+eng:[
+ ['Английский алфавит','<p>В английском алфавите <b>26 букв</b>. Буквы называются не так, как читаются в словах: H — «эйч», J — «джей», W — «дабл-ю».</p>',['A B C D','E F G H'],[
+  ['Сколько букв в английском алфавите?',['33','26','24'],1,'В английском алфавите 26 букв.'],
+  ['Какая буква идёт после C?',['B','D','E'],1,'A, B, C, D — после C идёт D.'],
+  ['Как называется буква H?',['аш','эйч','хэ'],1,'H называется «эйч».']]],
+ ['Цвета','<p><b>red</b> — красный, <b>blue</b> — синий, <b>green</b> — зелёный, <b>yellow</b> — жёлтый, <b>black</b> — чёрный, <b>white</b> — белый.</p>',['red — красный','blue — синий','green — зелёный','yellow — жёлтый'],[
+  ['red — это…',['синий','красный','зелёный'],1,'red — красный.'],
+  ['Как по-английски «жёлтый»?',['yellow','green','white'],0,'Жёлтый — yellow.'],
+  ['green — это…',['зелёный','серый','чёрный'],0,'green — зелёный.']]],
+ ['Привет! Как тебя зовут?','<p><b>Hello!</b> — Привет! <b>What\'s your name?</b> — Как тебя зовут? <b>I\'m Anna.</b> — Я Анна.</p><p><b>How old are you?</b> — Сколько тебе лет? <b>I\'m eight.</b> — Мне восемь.</p>',['Hello! — Привет!','Goodbye! — Пока!'],[
+  ['Как спросить имя?',['How are you?','What\'s your name?','How old are you?'],1,'What\'s your name? — Как тебя зовут?'],
+  ['Как ответить на «How old are you?»',['I\'m fine.','I\'m eight.','I\'m Anna.'],1,'Спрашивают возраст: I\'m eight — мне восемь.'],
+  ['Goodbye — это…',['Привет','Спасибо','До свидания'],2,'Goodbye — до свидания.']]]
+],
+world:[
+ ['Живая и неживая природа','<p>Живая природа <b>растёт, дышит, питается</b> и даёт потомство: растения, животные, грибы, человек.</p><p>Неживая природа: солнце, камни, вода, воздух, облака.</p>',['берёза — живая','камень — неживая'],[
+  ['Что относится к живой природе?',['камень','берёза','облако'],1,'Берёза растёт и дышит — она живая.'],
+  ['Что относится к неживой природе?',['солнце','гриб','воробей'],0,'Солнце не растёт и не питается.'],
+  ['Что умеют все живые существа?',['летать','расти','плавать'],1,'Расти умеет всё живое.']]],
+ ['Времена года','<p>В году <b>12 месяцев</b> и 4 времени года. Зима: декабрь, январь, февраль. Весна: март, апрель, май. Лето: июнь, июль, август. Осень: сентябрь, октябрь, ноябрь.</p>',['зима — снег','осень — листопад'],[
+  ['Сколько месяцев в году?',['4','10','12'],2,'В году 12 месяцев.'],
+  ['Какой месяц зимний?',['март','январь','июнь'],1,'Январь — середина зимы.'],
+  ['Что бывает осенью?',['листопад','ледоход','тают сосульки'],0,'Осенью опадают листья.']]],
+ ['Дикие и домашние животные','<p><b>Дикие</b> животные сами добывают еду и живут на воле: лиса, волк, лось.</p><p><b>Домашних</b> разводит и кормит человек: корова, коза, кошка.</p>',['лиса — дикая','коза — домашняя'],[
+  ['Кто дикое животное?',['корова','лиса','кошка'],1,'Лиса живёт в лесу и сама добывает еду.'],
+  ['Кто домашнее животное?',['волк','лось','коза'],2,'Козу разводит человек.'],
+  ['Зачем люди держат корову?',['ради молока','чтобы охраняла дом','чтобы ловила мышей'],0,'Корова даёт молоко.']]]
+],
+read:[
+ ['Устное народное творчество','<p>Сказки, загадки, пословицы и потешки придумал <b>народ</b>. Их передавали из уст в уста.</p><p><b>Пословица</b> — короткое мудрое высказывание. <b>Загадка</b> описывает предмет, не называя его.</p>',['пословица учит','загадку отгадывают'],[
+  ['Кто автор народной сказки?',['писатель','народ','учитель'],1,'Народные сказки сочинил народ.'],
+  ['«Без труда не выловишь и рыбку из пруда» — это…',['загадка','пословица','скороговорка'],1,'Это пословица: она учит трудолюбию.'],
+  ['Что из этого — загадка?',['Зимой и летом одним цветом','Тише едешь — дальше будешь','Шла Саша по шоссе'],0,'Это загадка про ёлку.']]],
+ ['Сказки о животных','<p>В сказках о животных звери говорят и поступают как люди: лиса хитрая, заяц трусливый, медведь сильный.</p>',['«Колобок»','«Лиса и журавль»','«Репка»','«Теремок»'],[
+  ['Кто угощал журавля кашей на тарелке?',['волк','лиса','медведь'],1,'Это сказка «Лиса и журавль».'],
+  ['Кого позвали последней тянуть репку?',['кошку','мышку','собаку'],1,'Последней позвали мышку.'],
+  ['Кто съел Колобка?',['заяц','волк','лиса'],2,'Хитрая лиса съела Колобка.']]],
+ ['Стихи и сказки поэтов','<p>В стихах есть <b>рифма</b> — созвучные концы строк. Поэты рисуют словами картины природы.</p><p>С. Есенин написал «Берёзу», К. Чуковский — «Мойдодыр» и «Муху-Цокотуху».</p>',['Есенин — «Берёза»','Чуковский — «Мойдодыр»'],[
+  ['Кто написал стихотворение «Берёза»?',['С. Есенин','А. Пушкин','К. Чуковский'],0,'«Берёзу» написал Сергей Есенин.'],
+  ['Что такое рифма?',['созвучные концы строк','название стиха','главный герой'],0,'Например: берёза — мороза.'],
+  ['Кто написал «Мойдодыр»?',['С. Маршак','К. Чуковский','А. Барто'],1,'«Мойдодыр» — сказка Корнея Чуковского.']]]
+]},
+3:{
+rus:[
+ ['Состав слова','<p><b>Корень</b> — общая часть родственных слов. <b>Приставка</b> стоит перед корнем, <b>суффикс</b> — после корня. <b>Окончание</b> — изменяемая часть слова.</p>',['лес — лесник — лесной','книга — книги — книгу'],[
+  ['Какая часть слова стоит перед корнем?',['суффикс','приставка','окончание'],1,'Приставка стоит перед корнем.'],
+  ['Корень в слове «лесник»',['лес','ник','лесн'],0,'Лес, лесной, лесник — общий корень «лес».'],
+  ['Окончание в слове «книга»',['а','книг','ига'],0,'Книга — книги — книгу: меняется окончание.']]],
+ ['Род имён существительных','<p>Он, мой — <b>мужской</b> род (стол). Она, моя — <b>женский</b> род (мышь). Оно, моё — <b>средний</b> род (окно).</p>',['стол — он, мой','окно — оно, моё'],[
+  ['Род слова «окно»',['мужской','женский','средний'],2,'Окно — оно, моё: средний род.'],
+  ['Род слова «стол»',['мужской','женский','средний'],0,'Стол — он, мой: мужской род.'],
+  ['Какое слово женского рода?',['конь','мышь','поле'],1,'Мышь — она, моя.']]],
+ ['Время глаголов','<p><b>Настоящее</b>: что делает? (читает). <b>Прошедшее</b>: что делал? (читал). <b>Будущее</b>: что будет делать? (будет читать).</p>',['бежит — настоящее','читал — прошедшее'],[
+  ['«Читал» — какое время?',['настоящее','прошедшее','будущее'],1,'Читал — что делал? Прошедшее.'],
+  ['«Будет рисовать» — какое время?',['настоящее','прошедшее','будущее'],2,'Что будет делать? Будущее.'],
+  ['«Бежит» — какое время?',['настоящее','прошедшее','будущее'],0,'Что делает? Настоящее.']]]
+],
+math:[
+ ['Таблица умножения на 6 и 7','<p>6 · 6 = 36, 6 · 7 = 42, 6 · 8 = 48, 6 · 9 = 54.</p><p>7 · 7 = 49, 7 · 8 = 56, 7 · 9 = 63.</p>',['6 · 7 = 42','7 · 8 = 56'],[
+  ['6 · 7 = ?',['42','36','48'],0,'6 · 7 = 42.'],
+  ['7 · 8 = ?',['54','56','63'],1,'7 · 8 = 56.'],
+  ['6 · 9 = ?',['54','56','45'],0,'6 · 9 = 54.']]],
+ ['Деление с остатком','<p>17 : 5 = 3 (ост. 2), потому что 5 · 3 = 15 и 17 − 15 = 2.</p><p>Остаток всегда <b>меньше делителя</b>.</p>',['17 : 5 = 3 (ост. 2)','25 : 7 = 3 (ост. 4)'],[
+  ['17 : 5 = ?',['3 (ост. 2)','3 (ост. 5)','2 (ост. 7)'],0,'5 · 3 = 15, остаётся 2.'],
+  ['Каким может быть остаток при делении на 4?',['0, 1, 2 или 3','от 0 до 4','любым'],0,'Остаток меньше делителя 4.'],
+  ['25 : 7 = ?',['3 (ост. 4)','4 (ост. 3)','3 (ост. 3)'],0,'7 · 3 = 21, остаётся 4.']]],
+ ['Площадь','<p>Площадь измеряют в <b>квадратных сантиметрах</b> (см²). Площадь прямоугольника = длина × ширина.</p>',['5 см × 3 см = 15 см²','4 см × 4 см = 16 см²'],[
+  ['Площадь прямоугольника 5 см × 3 см',['8 см²','15 см²','16 см'],1,'5 · 3 = 15 см².'],
+  ['Площадь квадрата со стороной 4 см',['16 см²','8 см²','12 см²'],0,'4 · 4 = 16 см².'],
+  ['В чём измеряют площадь?',['см','см²','кг'],1,'Площадь — в квадратных единицах.']]]
+],
+eng:[
+ ['Глагол can','<p><b>can</b> — уметь, мочь. Он не меняется: I can, she can. После can глагол без to: <b>I can swim.</b></p><p>Отрицание: <b>can\'t</b> — I can\'t fly.</p>',['I can jump.','He can\'t swim.'],[
+  ['Как сказать «Я умею плавать»?',['I can swim.','I cans swim.','I can to swim.'],0,'После can глагол без to.'],
+  ['She ___ dance.',['can','cans','can to'],0,'can не меняется: she can.'],
+  ['Как сказать «Я не умею летать»?',['I can\'t fly.','I not can fly.','I don\'t can fly.'],0,'Отрицание — can\'t.']]],
+ ['Have got и has got','<p>I, you, we, they — <b>have got</b>. He, she, it — <b>has got</b>.</p><p>Вопрос: <b>Have you got a dog?</b></p>',['I have got a ball.','She has got a cat.'],[
+  ['She ___ a cat.',['have got','has got'],1,'С she — has got.'],
+  ['I ___ a ball.',['have got','has got'],0,'С I — have got.'],
+  ['Как спросить «У тебя есть собака?»',['Have you got a dog?','Has you got a dog?','You have got a dog?'],0,'Have ставим в начало.']]],
+ ['Множественное число','<p>Обычно добавляем <b>-s</b>: cat — cats. После s, x, sh, ch — <b>-es</b>: box — boxes.</p><p>Исключения: child — children, mouse — mice, man — men.</p>',['cat — cats','box — boxes'],[
+  ['Множественное число от box',['boxs','boxes','boxen'],1,'После x добавляем -es.'],
+  ['child →',['childs','children','childes'],1,'Это исключение: children.'],
+  ['mouse →',['mouses','mice','mices'],1,'Это исключение: mice.']]]
+],
+world:[
+ ['Тела, вещества, частицы','<p><b>Тело</b> — любой предмет: ложка, гвоздь. <b>Вещество</b> — то, из чего состоит тело: сахар, железо, вода.</p><p>Все вещества состоят из крошечных <b>частиц</b>.</p>',['гвоздь — тело','железо — вещество'],[
+  ['Что из этого — вещество?',['ложка','сахар','стакан'],1,'Сахар — вещество.'],
+  ['Что из этого — тело?',['вода','гвоздь','соль'],1,'Гвоздь — предмет, значит тело.'],
+  ['Из чего состоят вещества?',['из частиц','из воздуха','ни из чего'],0,'Все вещества состоят из частиц.']]],
+ ['Вода и её свойства','<p>Чистая вода прозрачная, без цвета и запаха, она течёт. При 0 °C вода <b>замерзает</b> и становится льдом, а при кипении превращается в <b>пар</b>.</p>',['лёд — твёрдая вода','пар — вода-газ'],[
+  ['Во что превращается вода при замерзании?',['в пар','в лёд','в воздух'],1,'Замёрзшая вода — лёд.'],
+  ['Какого цвета чистая вода?',['голубая','без цвета','белая'],1,'Чистая вода не имеет цвета.'],
+  ['При какой температуре замерзает вода?',['0 °C','100 °C','10 °C'],0,'Вода замерзает при 0 °C.']]],
+ ['Организм человека','<p><b>Сердце</b> качает кровь. <b>Лёгкие</b> помогают дышать. <b>Головной мозг</b> управляет всем организмом.</p>',['сердце — кровь','лёгкие — дыхание'],[
+  ['Какой орган качает кровь?',['лёгкие','сердце','желудок'],1,'Сердце — насос для крови.'],
+  ['Чем мы дышим?',['лёгкими','печенью','сердцем'],0,'Дышим лёгкими.'],
+  ['Какой орган управляет организмом?',['головной мозг','желудок','кожа'],0,'Всем управляет головной мозг.']]]
+],
+read:[
+ ['Басни И. А. Крылова','<p><b>Басня</b> — короткий поучительный рассказ. Героями часто бывают животные. Главный вывод басни называется <b>мораль</b>.</p>',['«Стрекоза и Муравей»','«Ворона и Лисица»'],[
+  ['Как называется вывод басни?',['рифма','мораль','заголовок'],1,'Поучительный вывод — мораль.'],
+  ['Кто написал басню «Стрекоза и Муравей»?',['И. Крылов','Л. Толстой','А. Пушкин'],0,'Это басня Ивана Крылова.'],
+  ['Что выронила Ворона?',['сыр','яблоко','хлеб'],0,'Ворона выронила сыр, а Лисица его схватила.']]],
+ ['Рассказы Л. Н. Толстого','<p>Лев Толстой писал для детей короткие рассказы и были: «Акула», «Прыжок», «Лев и собачка».</p>',['«Прыжок»','«Лев и собачка»'],[
+  ['Кто автор рассказа «Прыжок»?',['Л. Толстой','Н. Носов','В. Драгунский'],0,'«Прыжок» написал Лев Толстой.'],
+  ['Где происходит действие «Прыжка»?',['на корабле','в лесу','в школе'],0,'Мальчик полез на мачту корабля.'],
+  ['«Лев и собачка» — это…',['быль','загадка','басня в стихах'],0,'Толстой назвал её былью.']]],
+ ['Рассказы Н. Носова','<p>Николай Носов писал весёлые рассказы о мальчишках: «Живая шляпа», «Затейники», «Мишкина каша».</p>',['«Живая шляпа»','«Мишкина каша»'],[
+  ['Кто оказался под «живой шляпой»?',['котёнок','мышь','щенок'],0,'Под шляпой сидел котёнок Васька.'],
+  ['Кто автор «Живой шляпы»?',['Н. Носов','В. Бианки','М. Пришвин'],0,'Это рассказ Николая Носова.'],
+  ['Кто испугался шляпы?',['Вадик и Вовка','Денис и Мишка','Незнайка'],0,'Испугались Вадик и Вовка.']]]
+]},
+4:{
+rus:[
+ ['Падежи','<p>В русском языке <b>6 падежей</b>: именительный (кто? что?), родительный (кого? чего?), дательный (кому? чему?), винительный (кого? что?), творительный (кем? чем?), предложный (о ком? о чём?).</p>',['пишу (чем?) ручкой','думаю (о чём?) о лете'],[
+  ['Сколько падежей в русском языке?',['5','6','7'],1,'Падежей шесть.'],
+  ['На какие вопросы отвечает творительный падеж?',['кем? чем?','кому? чему?','о ком? о чём?'],0,'Творительный: кем? чем?'],
+  ['«Пишу ручкой» — падеж слова «ручкой»',['дательный','творительный','предложный'],1,'Пишу чем? ручкой — творительный.']]],
+ ['Склонения существительных','<p><b>1-е</b>: слова на -а, -я (мама, земля, папа). <b>2-е</b>: мужской род без окончания и средний род на -о, -е (стол, конь, окно). <b>3-е</b>: женский род на ь (мышь, ночь).</p>',['земля — 1-е','конь — 2-е','ночь — 3-е'],[
+  ['Склонение слова «земля»',['1-е','2-е','3-е'],0,'Окончание -я — 1-е склонение.'],
+  ['Склонение слова «конь»',['1-е','2-е','3-е'],1,'Мужской род, нулевое окончание — 2-е.'],
+  ['Склонение слова «ночь»',['1-е','2-е','3-е'],2,'Женский род на ь — 3-е.']]],
+ ['Спряжение глаголов','<p><b>I спряжение</b>: -ешь, -ет, -ем, -ете, -ут/-ют (читает). <b>II спряжение</b>: -ишь, -ит, -им, -ите, -ат/-ят (строит).</p><p>Ко II относятся глаголы на -ить (кроме брить, стелить), 7 глаголов на -еть и 4 на -ать.</p>',['строить — II','читать — I'],[
+  ['Спряжение глагола «строить»',['I','II'],1,'Глагол на -ить — II спряжение.'],
+  ['Спряжение глагола «читать»',['I','II'],0,'Читать не исключение — I спряжение.'],
+  ['Как правильно: «он вид…т»?',['видет','видит'],1,'Видеть — исключение, II спряжение: видит.']]]
+],
+math:[
+ ['Многозначные числа','<p>Цифры числа делят на <b>классы</b> по три: класс единиц и класс тысяч. В числе 48 215 — 48 тысяч и 215 единиц.</p>',['48 215','102 005'],[
+  ['Сколько тысяч в числе 48 215?',['48','215','4'],0,'Класс тысяч — 48.'],
+  ['Как записать «сто две тысячи пять»?',['102 005','1 025','102 500'],0,'102 тысячи и 5 единиц.'],
+  ['Какое число больше?',['99 999','100 000'],1,'В 100 000 шесть знаков, оно больше.']]],
+ ['Деление на двузначное число','<p>384 : 12 = <b>32</b>. Проверяем умножением: 32 · 12 = 384.</p>',['384 : 12 = 32','96 : 16 = 6'],[
+  ['384 : 12 = ?',['32','23','42'],0,'32 · 12 = 384.'],
+  ['96 : 16 = ?',['6','8','4'],0,'16 · 6 = 96.'],
+  ['Как проверить деление?',['умножением','сложением','никак'],0,'Частное умножаем на делитель.']]],
+ ['Скорость, время, расстояние','<p><b>S = v · t</b>: расстояние равно скорости, умноженной на время.</p><p>Скорость: v = S : t. Время: t = S : v.</p>',['60 км/ч · 3 ч = 180 км','100 км : 2 ч = 50 км/ч'],[
+  ['Машина ехала 3 ч со скоростью 60 км/ч. Какой путь?',['180 км','63 км','20 км'],0,'60 · 3 = 180 км.'],
+  ['Путь 100 км за 2 ч. Какая скорость?',['50 км/ч','200 км/ч','98 км/ч'],0,'100 : 2 = 50 км/ч.'],
+  ['Как найти время?',['t = S : v','t = S · v','t = v : S'],0,'Время = расстояние : скорость.']]]
+],
+eng:[
+ ['Present Simple','<p>Так говорят о том, что бывает всегда или часто: <b>I play</b>, но <b>he plays</b>.</p><p>Вопрос: <b>Do you…?</b> / <b>Does she…?</b> Отрицание: don\'t / doesn\'t.</p>',['I play football.','She plays tennis.'],[
+  ['He ___ football every day.',['play','plays'],1,'С he добавляем -s.'],
+  ['___ you like pizza?',['Do','Does'],0,'С you — Do.'],
+  ['She ___ like milk.',['don\'t','doesn\'t'],1,'С she — doesn\'t.']]],
+ ['Present Continuous','<p>Так говорят о том, что происходит <b>сейчас</b>: am / is / are + глагол с -ing.</p><p><b>I am reading.</b> <b>They are playing.</b></p>',['I am reading.','She is swimming.'],[
+  ['I ___ reading now.',['am','is','are'],0,'С I — am.'],
+  ['They ___ playing.',['is','are'],1,'С they — are.'],
+  ['She is swimming — это…',['Она плавает сейчас','Она умеет плавать','Она плавала'],0,'Is swimming — прямо сейчас.']]],
+ ['Past Simple','<p>Прошедшее время: обычно добавляем <b>-ed</b>: play — played. Неправильные глаголы запоминаем: go — <b>went</b>, see — <b>saw</b>.</p>',['play — played','go — went'],[
+  ['Прошедшее время от play',['playd','played','plaied'],1,'play + ed = played.'],
+  ['go →',['goed','went','gone'],1,'go — неправильный глагол: went.'],
+  ['Yesterday I ___ to the park.',['go','went'],1,'Yesterday — вчера, нужно прошедшее время.']]]
+],
+world:[
+ ['Природные зоны России','<p>С севера на юг: <b>арктические пустыни</b>, <b>тундра</b>, <b>лесная зона</b>, <b>степь</b>, пустыни, субтропики. Больше всего места занимает лесная зона.</p>',['тундра — карликовая берёза','Арктика — белый медведь'],[
+  ['Где живёт белый медведь?',['в тайге','в арктической зоне','в степи'],1,'Белый медведь живёт во льдах Арктики.'],
+  ['Где растут карликовые берёзы?',['в тундре','в степи','в пустыне'],0,'В тундре холодно, деревья низкие.'],
+  ['Какая зона самая большая в России?',['лесная зона','степь','пустыня'],0,'Леса занимают больше всего места.']]],
+ ['Солнечная система','<p>Вокруг Солнца вращаются <b>8 планет</b>. Земля — третья от Солнца. Самая большая планета — <b>Юпитер</b>.</p>',['Меркурий, Венера, Земля','Юпитер — самый большой'],[
+  ['Сколько планет в Солнечной системе?',['7','8','9'],1,'Планет восемь.'],
+  ['Какая по счёту от Солнца Земля?',['2','3','4'],1,'Земля — третья.'],
+  ['Самая большая планета',['Марс','Юпитер','Венера'],1,'Юпитер — гигант.']]],
+ ['Страницы истории России','<p>Москву основал князь <b>Юрий Долгорукий</b> в 1147 году. <b>Пётр I</b> основал Санкт-Петербург. 12 апреля 1961 года <b>Юрий Гагарин</b> первым полетел в космос.</p>',['1147 — Москва','1961 — Гагарин'],[
+  ['Кто основал Москву?',['Юрий Долгорукий','Пётр I','Иван Грозный'],0,'Москву основал Юрий Долгорукий.'],
+  ['Какой город основал Пётр I?',['Москву','Санкт-Петербург','Новгород'],1,'Пётр I основал Санкт-Петербург.'],
+  ['В каком году человек впервые полетел в космос?',['1957','1961','1945'],1,'Юрий Гагарин полетел в 1961 году.']]]
+],
+read:[
+ ['Сказки А. С. Пушкина','<p>«Сказка о мёртвой царевне и о семи богатырях» — о доброй царевне, злой мачехе и верном королевиче Елисее.</p>',['волшебное зеркальце','семь богатырей'],[
+  ['У кого было волшебное зеркальце?',['у царицы-мачехи','у царевны','у Елисея'],0,'«Свет мой, зеркальце, скажи…» — говорила мачеха.'],
+  ['Сколько было богатырей?',['3','7','12'],1,'Богатырей было семь.'],
+  ['Кто нашёл царевну?',['королевич Елисей','царь Салтан','Балда'],0,'Её нашёл королевич Елисей.']]],
+ ['П. П. Бажов. «Серебряное копытце»','<p>Сказ о девочке Дарёнке, старике Коковане и волшебном козлике, который выбивал копытцем драгоценные камни.</p>',['Дарёнка','Кокованя'],[
+  ['Кто такой Серебряное копытце?',['козлик','конь','кот'],0,'Это волшебный козлик.'],
+  ['Как звали девочку?',['Дарёнка','Алёнушка','Машенька'],0,'Девочку звали Дарёнка.'],
+  ['Что появлялось там, где козлик бил копытцем?',['драгоценные камни','вода','цветы'],0,'Появлялись самоцветы.']]],
+ ['Мифы Древней Греции','<p><b>Мифы</b> — древние рассказы о богах и героях. Самый известный герой — <b>Геракл</b>, совершивший 12 подвигов.</p>',['Геракл','12 подвигов'],[
+  ['Сколько подвигов совершил Геракл?',['7','12','3'],1,'Подвигов было двенадцать.'],
+  ['Кто такой Геракл?',['герой мифов Древней Греции','русский богатырь','герой сказки Пушкина'],0,'Геракл — герой греческих мифов.'],
+  ['Как называют рассказы о богах и героях?',['мифы','басни','загадки'],0,'Это мифы.']]]
+]}};
+
+/* ---------- Storage ---------- */
+const KEY='orbita-v1';
+let S={name:'',grade:2,done:{},days:[]};
+try{const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw));}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=ymd(new Date());
+if(!S.days.includes(today)){S.days.push(today);S.days=S.days.slice(-60);save();}
+function streak(){let n=0;const d=new Date();while(S.days.includes(ymd(d))){n++;d.setDate(d.getDate()-1);}return n;}
+
+/* ---------- Helpers ---------- */
+const app=document.getElementById('app');
+const escH=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const lkey=(g,s,i)=>g+'-'+s+'-'+i;
+const isDone=(g,s,i)=>S.done[lkey(g,s,i)]!=null;
+const pct=(g,s)=>Math.round(C[g][s].filter((_,i)=>isDone(g,s,i)).length/C[g][s].length*100);
+const nextIdx=(g,s)=>{const i=C[g][s].findIndex((_,k)=>!isDone(g,s,k));return i<0?0:i;};
+const deco=(s,cls)=>`<svg class="${cls}" viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="${SUBJ[s].w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${SUBJ[s].deco}</svg>`;
+const plural=(n,a,b,c)=>{const m=n%10,h=n%100;return n+' '+(m===1&&h!==11?a:m>=2&&m<=4&&(h<12||h>14)?b:c);};
+const back='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>';
+const tick='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Пройдено"><path d="M5 12.5 10 17l9-10"/></svg>';
+const star=on=>`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z" fill="${on?'#F2B705':'none'}" stroke="${on?'#C99700':'var(--track)'}" stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+function setNav(r){
+  const h=document.getElementById('nav-home'),p=document.getElementById('nav-profile');
+  if(r==='profile'){p.setAttribute('aria-current','page');h.removeAttribute('aria-current');}
+  else{h.setAttribute('aria-current','page');p.removeAttribute('aria-current');}
+}
+
+/* ---------- Home ---------- */
+function home(){
+  const g=S.grade, st=streak();
+  const names=['вс','пн','вт','ср','чт','пт','сб'];
+  let days='';
+  for(let k=4;k>=0;k--){const d=new Date();d.setDate(d.getDate()-k);const on=S.days.includes(ymd(d));days+=`<div class="day${on?' on':''}${k===0?' today':''}"><i></i>${names[d.getDay()]}</div>`;}
+  const cards=ORDER.map(s=>{const p=pct(g,s),i=nextIdx(g,s),done=p===100;return `
+    <a class="subj" href="#/course/${g}/${s}" style="background:${SUBJ[s].color}">
+      ${deco(s,'deco')}
+      <div class="row"><div class="bar"><b style="width:${p}%"></b></div><span style="font-size:13px">${p?p+'%':'Не начат'}</span></div>
+      <h3>${SUBJ[s].name}, ${g} класс</h3>
+      <p>${done?'Все темы пройдены':(p?'Сейчас: ':'Первая тема: ')+C[g][s][i][0]}</p>
+      <div class="foot"><span>${plural(C[g][s].length,'тема','темы','тем')}</span><span class="pill">${done?'Повторить':p?'Продолжить':'Начать'}</span></div>
+    </a>`;}).join('');
+  app.innerHTML=`<div class="wrap">
+    <header class="row between">
+      <div class="row"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="7" stroke="var(--indigo)" stroke-width="2.5" transform="rotate(-25 16 16)"/><circle cx="16" cy="16" r="5.5" fill="var(--ink)"/><circle cx="28" cy="10" r="2.5" fill="#9BC72E"/></svg><span class="logo">Орбита</span></div>
+      <a class="avatar" href="#/profile" aria-label="Профиль">${S.name?escH(S.name.trim()[0].toUpperCase()):'?'}</a>
+    </header>
+    <section><h1 class="h-display" style="font-size:28px;line-height:1.15">Привет${S.name?', '+escH(S.name):''}!</h1><p class="lead">Выбери класс и предмет. Каждая тема — короткое правило и три задания.</p></section>
+    <section class="panel row between"><div><div class="h-display" style="font-size:17px">${st?plural(st,'день','дня','дней')+' подряд':'Начни серию'}</div><div style="font-size:13px;color:var(--quiet);margin-top:2px">Заходи каждый день</div></div><div class="streak-days">${days}</div></section>
+    <section style="display:flex;flex-direction:column;gap:14px">
+      <div class="row between" style="align-items:baseline"><h2 class="h-display" style="font-size:22px">Мои предметы</h2><span style="font-size:14px;color:var(--quiet)">5 предметов</span></div>
+      <div class="seg" role="tablist" aria-label="Класс">${[2,3,4].map(n=>`<button type="button" role="tab" data-grade="${n}" aria-selected="${n===g}">${n} класс</button>`).join('')}</div>
+      <div class="cards">${cards}</div>
+    </section></div>`;
+  app.querySelectorAll('[data-grade]').forEach(b=>b.onclick=()=>{S.grade=+b.dataset.grade;save();home();});
+}
+
+/* ---------- Course ---------- */
+function course(g,s){
+  const list=C[g][s], p=pct(g,s), i=nextIdx(g,s), col=SUBJ[s].color, doneN=list.filter((_,k)=>isDone(g,s,k)).length;
+  const dash=(2*Math.PI*36)*p/100;
+  app.innerHTML=`<header class="chead" style="background:${col}">
+    ${deco(s,'deco')}
+    <div class="row between"><a class="iconbtn glass" href="#/" aria-label="Назад к предметам">${back}</a></div>
+    <div class="row" style="gap:18px">
+      <div class="ring"><svg width="84" height="84" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="36" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="8"/>${p?`<circle cx="42" cy="42" r="36" fill="none" stroke="#C2EA4E" stroke-width="8" stroke-linecap="round" stroke-dasharray="${dash} 300" transform="rotate(-90 42 42)"/>`:''}</svg><span>${p}%</span></div>
+      <div><h1 class="h-display" style="font-size:24px;line-height:1.15">${SUBJ[s].name}, ${g} класс</h1><div style="font-size:14px;margin-top:6px;opacity:.92">${plural(list.length,'тема','темы','тем')}, пройдено ${doneN}</div></div>
+    </div>
+    <a class="resume" href="#/lesson/${g}/${s}/${i}"><span><small>${p===100?'Повторить первую тему':p?'Продолжить с места остановки':'Начать с первой темы'}</small><strong>${list[i][0]}</strong></span><span class="play"><svg width="20" height="20" viewBox="0 0 24 24" fill="#14161C" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span></a>
+  </header>
+  <main class="topics" style="--accent:${col}">
+    <h2 class="h-display" style="font-size:20px;margin-bottom:4px">Темы</h2>
+    ${list.map((l,k)=>{const d=isDone(g,s,k),cur=!d&&k===i&&p<100;const sc=S.done[lkey(g,s,k)];return `<a class="topic${d?' done':''}${cur?' current':''}" href="#/lesson/${g}/${s}/${k}">
+      <span class="num">${d?tick:k+1}</span>
+      <span class="t"><b>${l[0]}</b><small>${d?'Пройдено: '+sc+' из '+l[3].length:cur?'Следующий урок':'Правило и три задания'}</small></span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--quiet)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>`;}).join('')}
+  </main>`;
+}
+
+/* ---------- Lesson ---------- */
+function lesson(g,s,i){
+  const L=C[g][s][i], col=SUBJ[s].color, qs=L[3];
+  let step=0, score=0, picked=null, checked=false, saved=false;
+  function render(){
+    const total=qs.length+1;
+    const bars=Array.from({length:total},(_,k)=>`<i class="${k<=step?'on':''}"></i>`).join('');
+    let body='';
+    if(step===0){
+      body=`<section class="theory"><div>${L[1]}</div>${L[2].length?`<div class="ex">${L[2].map(e=>`<div>${e}</div>`).join('')}</div>`:''}</section>
+      <button class="cta" id="go" type="button">Начать задание</button>`;
+    } else if(step<=qs.length){
+      const q=qs[step-1], right=picked===q[2];
+      body=`<section style="display:flex;flex-direction:column;gap:12px">
+        <h2 class="h-display" style="font-size:19px;line-height:1.3">${q[0]}</h2>
+        <div class="opts">${q[1].map((o,k)=>{let c='';if(checked){if(k===q[2])c=' right';else if(k===picked)c=' wrong';}return `<button type="button" class="opt${c}" data-o="${k}" aria-pressed="${picked===k}" ${checked?'disabled':''}><i></i>${o}</button>`;}).join('')}</div>
+      </section>
+      ${checked?`<div class="fb ${right?'ok':'no'}" role="status"><b>${right?'Верно!':'Не совсем.'}</b> ${q[3]}</div>`:''}
+      <button class="cta" id="go" type="button" ${picked===null?'disabled':''}>${checked?(step===qs.length?'Узнать результат':'Дальше'):'Проверить'}</button>`;
+    } else {
+      if(!saved){const k=lkey(g,s,i);S.done[k]=Math.max(score,S.done[k]||0);save();saved=true;}
+      const nxt=i+1<C[g][s].length;
+      body=`<section class="result">
+        <div class="stars">${[0,1,2].map(k=>star(k<score)).join('')}</div>
+        <h2 class="h-display" style="font-size:26px">${score===qs.length?'Отлично!':score>=2?'Хорошо!':'Попробуй ещё раз'}</h2>
+        <p class="lead" style="margin:0">Правильных ответов: ${score} из ${qs.length}</p>
+      </section>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+        ${nxt?`<a class="cta" href="#/lesson/${g}/${s}/${i+1}">Следующая тема</a>`:`<a class="cta" href="#/course/${g}/${s}">К темам предмета</a>`}
+        <button class="cta ghost" id="again" type="button">Пройти заново</button>
+      </div>`;
+    }
+    app.innerHTML=`<div class="wrap" style="--accent:${col}">
+      <header class="lhead"><a class="iconbtn" href="#/course/${g}/${s}" aria-label="Закрыть урок"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></a>
+        <div class="steps" style="grid-template-columns:repeat(${total},minmax(0,1fr))" aria-hidden="true">${bars}</div>
+        <span style="font-size:13px;font-weight:600;color:var(--quiet)">${Math.min(step+1,total)} из ${total}</span></header>
+      <section><div class="kicker">${SUBJ[s].name}, ${g} класс</div><h1 class="h-display" style="font-size:24px;line-height:1.2;margin-top:8px">${L[0]}</h1></section>
+      ${body}</div>`;
+    app.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{picked=+b.dataset.o;render();});
+    const go=document.getElementById('go');
+    if(go) go.onclick=()=>{
+      if(step===0){step=1;}
+      else if(!checked){checked=true;const ok=picked===qs[step-1][2];if(ok)score++;try{navigator.vibrate&&navigator.vibrate(ok?15:[20,40,20]);}catch(e){}}
+      else {step++;picked=null;checked=false;}
+      render(); window.scrollTo(0,0);
+    };
+    const again=document.getElementById('again');
+    if(again) again.onclick=()=>{step=0;score=0;picked=null;checked=false;saved=false;render();window.scrollTo(0,0);};
+  }
+  render();
+}
+
+/* ---------- Profile ---------- */
+function profile(){
+  const total=Object.keys(S.done).length, stars=Object.values(S.done).reduce((a,b)=>a+b,0);
+  const word=n=>{const m=n%10,h=n%100;return m===1&&h!==11?'тема':m>=2&&m<=4&&(h<12||h>14)?'темы':'тем';};
+  app.innerHTML=`<div class="wrap">
+    <h1 class="h-display" style="font-size:26px">Профиль</h1>
+    <div class="stat"><div><b>${total}</b><span>${word(total)} пройдено</span></div><div><b>${stars}</b><span>звёзд собрано</span></div><div><b>${streak()}</b><span>дней подряд</span></div></div>
+    <div class="panel field"><label for="nm" style="font-weight:600">Как тебя зовут?</label><input id="nm" type="text" maxlength="20" placeholder="Имя" value="${escH(S.name)}" autocomplete="given-name"><span id="saved" style="font-size:13px;color:var(--quiet);min-height:18px" aria-live="polite"></span></div>
+    <div class="panel" style="display:flex;flex-direction:column;gap:12px"><b>Начать сначала</b><span style="font-size:14px;color:var(--quiet);line-height:1.45">Сотрёт пройденные темы и звёзды на этом устройстве.</span><button class="cta ghost" id="reset" type="button">Сбросить прогресс</button></div>
+  </div>`;
+  const nm=document.getElementById('nm'),sv=document.getElementById('saved');
+  nm.oninput=()=>{S.name=nm.value.trim();save();sv.textContent='Имя сохранено';};
+  document.getElementById('reset').onclick=e=>{const b=e.currentTarget;if(b.dataset.sure){S.done={};save();b.textContent='Прогресс сброшен';delete b.dataset.sure;profile();}else{b.dataset.sure='1';b.textContent='Нажми ещё раз, чтобы подтвердить';}};
+}
+
+/* ---------- Router ---------- */
+function route(){
+  const h=(location.hash||'#/').slice(2).split('/');
+  if(h[0]==='course'&&C[h[1]]&&C[h[1]][h[2]]){setNav('home');course(+h[1],h[2]);}
+  else if(h[0]==='lesson'&&C[h[1]]&&C[h[1]][h[2]]&&C[h[1]][h[2]][+h[3]]){setNav('home');lesson(+h[1],h[2],+h[3]);}
+  else if(h[0]==='profile'){setNav('profile');profile();}
+  else {setNav('home');home();}
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange',route);
+route();
+})();
+</script>
+</body>
+</html>
