@@ -1,0 +1,16 @@
+{
+  "name": "Орбита — уроки для 2–4 класса",
+  "short_name": "Орбита",
+  "description": "Правила и задания трёх уровней сложности по пяти школьным предметам.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#EEF0F4",
+  "theme_color": "#3946A6",
+  "icons": [
+    {"src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

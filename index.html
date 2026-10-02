@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Орбита — уроки для 2–4 класса</title>
+<meta name="description" content="Орбита — бесплатный тренажёр для 2–4 класса: русский язык, математика, английский, окружающий мир и литературное чтение. Задания трёх уровней сложности, автоматические оценки, очки, ранги и награды.">
+<meta name="theme-color" content="#EEF0F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111318" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Орбита — уроки для 2–4 класса">
+<meta property="og:description" content="Короткие правила и задания трёх уровней сложности по пяти предметам. Оценки, очки, ранги и награды.">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/icons/icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/app.css?v=__BUILD__">
+<script>try{var t=(JSON.parse(localStorage.getItem('orbita-v2')||'{}')||{}).theme;if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body>
+<nav class="nav" aria-label="Основное меню">
+  <a class="logo brand" href="#/" aria-label="Орбита — на главную"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><ellipse cx="16" cy="16" rx="14" ry="7" stroke="var(--indigo)" stroke-width="2.5" transform="rotate(-25 16 16)"/><circle cx="16" cy="16" r="5.5" fill="var(--ink)"/><circle cx="28" cy="10" r="2.5" fill="#9BC72E"/></svg>Орбита</a>
+  <ul>
+    <li><a href="#/" data-nav="home"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10v16H5.5A1.5 1.5 0 0 1 4 18.5zM14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14z"/></svg>Предметы</a></li>
+    <li><a href="#/rewards" data-nav="rewards"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 13v4M8.5 20h7"/></svg>Награды</a></li>
+    <li><a href="#/profile" data-nav="profile"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></svg>Профиль</a></li>
+  </ul>
+</nav>
+<div class="app" id="app"><noscript><p class="empty">Для работы «Орбиты» включите JavaScript в браузере.</p></noscript></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script src="assets/js/data/grade2.js?v=__BUILD__" defer></script>
+<script src="assets/js/data/grade3.js?v=__BUILD__" defer></script>
+<script src="assets/js/data/grade4.js?v=__BUILD__" defer></script>
+<script src="assets/js/app.js?v=__BUILD__" defer></script>
+</body>
+</html>

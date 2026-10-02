@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Страница не найдена — Орбита</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#EEF0F4;--card:#fff;--ink:#14161C;--muted:#4A4F5C;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--bg:#111318;--card:#1C1F27;--ink:#F1F2F5;--muted:#B9BDC8}}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;padding:16px}
+main{max-width:420px;width:100%;background:var(--card);border-radius:28px;padding:32px 24px;text-align:center}
+h1{font-size:56px;margin:8px 0 4px}p{color:var(--muted);line-height:1.5;margin:0 0 20px}
+a{display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 26px;border-radius:26px;background:#C2EA4E;color:#14161C;font-weight:600;text-decoration:none}
+</style>
+</head>
+<body>
+<main>
+  <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#3946A6"/><ellipse cx="32" cy="33" rx="24" ry="11" fill="none" stroke="#fff" stroke-width="4" transform="rotate(-25 32 33)"/><circle cx="32" cy="33" r="9.5" fill="#fff"/><circle cx="51.5" cy="22" r="4.5" fill="#C2EA4E"/></svg>
+  <h1>404</h1>
+  <p>Эта страница улетела с орбиты. Вернись на главную — там тебя ждут уроки.</p>
+  <a id="home" href="/">На главную</a>
+</main>
+<script>
+// Для сайта проекта на github.io главная лежит в /<репозиторий>/
+var seg=location.pathname.split('/')[1];
+if(/\.github\.io$/.test(location.hostname)&&seg)document.getElementById('home').href='/'+seg+'/';
+</script>
+</body>
+</html>
